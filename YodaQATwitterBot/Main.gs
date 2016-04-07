@@ -24,6 +24,10 @@ function getQuestionsFromTwitter(){
       setLastQuestionID(tweet["id_str"]);
       log("Setting last question id to: "+tweet["id_str"]);
     }
+    if ("retweeted_status" in tweet){
+      log("This is retweet. I skip this tweet")
+      continue;
+    }
     var otherUsersMentions = getUserMentions(tweet["text"]);
     log("Asked question: "+tweet["user"].screen_name+" | "+tweet["text"]+" | "+tweet["id_str"]+" | "+ otherUsersMentions);
     askedQuestion(tweet["user"].screen_name, tweet["text"].replace(/(@\S+)\s/gi,"").replaceAll("#",""), tweet["id_str"], otherUsersMentions);
